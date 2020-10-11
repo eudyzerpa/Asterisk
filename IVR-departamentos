@@ -13,6 +13,12 @@ TRUNKMSD => 1
 
 [default]
 
+;---------------------------------Llamada al arbol de IVR-------------------------------
+
+exten => 9000,1,Goto(ivr-departamentos,s,1)
+
+;---------------------------------------------------------------------------------------
+
 [ivr-departamentos]
 
 exten => s,1,Answer()
