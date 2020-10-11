@@ -1,4 +1,10 @@
-general]
+# Interactive Voice Response Departamentos
+
+"""
+La expresión regular que invoca la "exten 9000" enruta la llamada a los contextos ventas, finanzas, operaciones, atención al cliente, según el digito que marque el usuario
+"""
+
+[general]
 static=yes
 writeprotect=yes
 autofallthrough=yes
@@ -29,7 +35,7 @@ exten => s,n,WaitExten(5)
 exten => 1,1,Goto(ventas,5555,1)
 exten => 2,1,Goto(finanzas,7777,1)
 exten => 3,1,Goto(operaciones,3333,1)
-exten => 4,1,Goto(atencion-al-ciudadano,2000,1)
+exten => 4,1,Goto(atencion-al-cliente,2000,1)
 
 
 [ventas]
