@@ -1,0 +1,25 @@
+[general]
+static=yes
+writeprotect=yes
+autofallthrough=yes
+clearglobalvars=no
+extenpatternmatchnew=no
+
+[globals]
+CONSOLE => Console/dsp
+IAXINFO => guest
+TRUNK => DAHDI/G2
+TRUNKMSD => 1
+
+[default]
+
+;------------------------Grabadora de archivos de audio--------------------------------
+
+exten => 88,1,Answer() 				                ; Contesta la llamada
+exten => 88,2,Wait(1)           		          ; Espera por 1 segundo
+exten => 88,3,Record(gracias-atencion.gsm)    ; Graba el audio        
+exten => 88,4,Wait(0.5)				                ; Espera 0.5 segundos
+exten => 88,5,Playback(gracias-atencion)		  ; Reproduce el archivo de audio		
+exten => 88,6,Hangup() 				                ; Cuelga	
+
+;--------------------------------------------------------------------------------------
