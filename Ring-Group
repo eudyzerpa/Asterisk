@@ -1,0 +1,27 @@
+# Ring Group
+
+***
+Llama simultáneamente a las extensiones 6000 , 6001 , 6002, y 6003 haciendo Ring por 25 segundos
+***
+
+
+[general]
+static=yes
+writeprotect=yes
+autofallthrough=yes
+clearglobalvars=no
+extenpatternmatchnew=no
+
+[globals]
+CONSOLE => Console/dsp
+IAXINFO => guest
+TRUNK => DAHDI/G2
+TRUNKMSD => 1
+
+[default]
+
+; ---------------------------------Grupo de llamada-------------------------------------
+
+exten => 6010,1,Dial(SIP/6000&SIP/6001&SIP/6002&SIP/6003,25,r) 
+
+; --------------------------------------------------------------------------------------

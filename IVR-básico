@@ -1,0 +1,36 @@
+# Interactive Voice Response
+"""
+Expresiones regulares minímas para construir un IVR básico
+"""
+
+
+[general]
+static=yes
+writeprotect=yes
+autofallthrough=yes
+clearglobalvars=no
+extenpatternmatchnew=no
+
+[globals]
+CONSOLE => Console/dsp
+IAXINFO => guest
+TRUNK => DAHDI/G2
+TRUNKMSD => 1
+
+[default]
+
+;------------------------------ IVR BÃ¡sico ---------------------------------------------
+
+exten => 6000,1,Answer()
+exten => 6000,2,Wait(2)
+exten => 6000,3,Background(bienvenida)
+exten => 6000,4,WaitExten(15)
+exten => 6000,5,Dial(SIP/6003,10,tTm)
+exten => 6000,6,Playback(espere-en-linea)
+exten => 6000,7,Dial(SIP/6006&SIP/6005&SIP/6002)
+exten => 6000,8,Voicemail(6001)
+exten => 6000,9,Hangup()
+exten => i,1,Playback(pbx-invalid)
+exten => i,2,Goto(default,6000,2)
+
+;---------------------------------------------------------------------------------------

@@ -1,0 +1,60 @@
+# CALL
+"""
+Expresiones regulares para enrutar las llamadas internas, locales, celulares, nacionales e internacionales
+
+"""
+
+
+[general]
+static=yes
+writeprotect=yes
+autofallthrough=yes
+clearglobalvars=no
+extenpatternmatchnew=no
+
+[globals]
+CONSOLE => Console/dsp
+IAXINFO => guest
+TRUNK => DAHDI/G2
+TRUNKMSD => 1
+
+[default]
+
+--------------------------- Interno (al rango 6000 - 6999) -------------------------------
+
+exten => _6XXX,1,Dial(SIP/${EXTEN},10,r,tT)  ; Patron para llamar del 6000 al 6999 
+exten => _6XXX,2,Voicemail(${EXTEN})         ; AplicaciÃ³n de buzÃ³n de voz
+exten => _6XXX,3,Hangup()                    ; AplicaciÃ³n para colgar
+
+; --------------------------------------------------------------------------------------
+
+
+[local]
+include => default
+
+exten => _0XXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r,tT)
+exten => _00800XXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r,tT)
+exten => _00500XXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r,tT)
+
+
+[nacional]
+include => local
+
+exten => _002XXXXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r,tT)
+
+
+[celular]
+include => nacional
+
+exten => _00416XXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r)
+exten => _00426XXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r)
+exten => _00414XXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r)
+exten => _00424XXXXXXX,1,Dial(SIP/voice-gateway/${EXTEN},60,r)
+
+
+[internacional]
+include => nacional
+include => celular
+
+exten => _000.,1,Dial(SIP/voice-gateway/${EXTEN},60,r,tT)
+

@@ -1,0 +1,12 @@
+# Voicemail Menú
+
+***
+Al marcar la "Exten 9999" dispara la aplicación que solicita el número de extensión y la contraseña para escuchar los mensajes de voz almacenados
+***
+
+
+; ------------------------------Menú para leer Voicemail--------------------------------
+
+exten => 9999,1,VoiceMailMain(${CALLERID(num)}) ; Aplicación con menú de mensajes de voz
+
+; --------------------------------------------------------------------------------------

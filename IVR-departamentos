@@ -1,0 +1,66 @@
+# Interactive Voice Response Departamentos
+
+"""
+La expresión regular que invoca la "exten 9000" enruta la llamada a los contextos ventas, finanzas, operaciones, atención al cliente, según el digito que marque el usuario
+"""
+
+[general]
+static=yes
+writeprotect=yes
+autofallthrough=yes
+clearglobalvars=no
+extenpatternmatchnew=no
+
+[globals]
+CONSOLE => Console/dsp
+IAXINFO => guest
+TRUNK => DAHDI/G2
+TRUNKMSD => 1
+
+[default]
+
+;---------------------------------Llamada al arbol de IVR-------------------------------
+
+exten => 9000,1,Goto(ivr-departamentos,s,1)
+
+;---------------------------------------------------------------------------------------
+
+[ivr-departamentos]
+
+exten => s,1,Answer()
+exten => s,n,Wait(2)
+exten => s,n,Background(arbol-ivr)
+exten => s,n,WaitExten(5)
+
+exten => 1,1,Goto(ventas,5555,1)
+exten => 2,1,Goto(finanzas,7777,1)
+exten => 3,1,Goto(operaciones,3333,1)
+exten => 4,1,Goto(atencion-al-cliente,2000,1)
+
+
+[ventas]
+
+exten => 5555,1,Answer()
+exten => 5555,2,Playback(gracias-ventas)
+exten => 5555,3,Hangup()
+
+[finanzas]
+
+exten => 7777,1,Answer()
+exten => 7777,2,Playback(gracias-finanzas)
+exten => 7777,3,Hangup()
+
+
+[operaciones]
+
+exten => 3333,1,Answer()
+exten => 3333,2,Playback(gracias-operaciones)
+exten => 3333,3,Hangup()
+
+
+[atencion-al-ciudadano]
+
+exten => 2000,1,Answer()
+exten => 2000,2,Playback(gracias-atencion)
+exten => 2000,3,Hangup()
+

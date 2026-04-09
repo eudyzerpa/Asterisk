@@ -1,0 +1,26 @@
+[general]
+static=yes
+writeprotect=yes
+autofallthrough=yes
+clearglobalvars=no
+extenpatternmatchnew=no
+
+[globals]
+CONSOLE => Console/dsp
+IAXINFO => guest
+TRUNK => DAHDI/G2
+TRUNKMSD => 1
+
+[default]
+
+;------------------------------------SIGUEME--------------------------------------------
+
+exten => _21,1,Dial(SIP/6001,10,r,tT)  ; Llama a la extension 6001 
+exten => _21,2,Dial(SIP/6002,7,r,tT)  ;  Llama a la extension 6002
+exten => _21,3,Dial(SIP/6003,7,r,tT)  ;  Llama a la extension 6003
+exten => _21,4,Playback(espere-mientras-conecta)  ; Reproduce el archivo espere-mientras-conecta.gsm 
+exten => _21,5,Dial(SIP/voice-gateway/004165239373,30,r,tT)  ;  Llama a la PSTN
+exten => _21,6,Voicemail(6000)  ; Ejecuta la aplicacion Voicemail 
+exten => _21,7,Hangup()  ; Cuelga 
+
+;--------------------------------------------------------------------------------------
